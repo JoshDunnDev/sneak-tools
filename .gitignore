@@ -10,7 +10,6 @@
 
 #react dev
 /client/node_modules
-/client/build
 
 # production
 /build
