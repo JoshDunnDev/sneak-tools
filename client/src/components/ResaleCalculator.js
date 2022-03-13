@@ -40,6 +40,17 @@ const ResaleCalculator = () => {
     setData({transactionDetails, collectionStats, ethPrice});
   }
 
+  let submitText
+  if(loading) {
+    submitText = <>
+      <span className="spinner-border spinner-border-sm" />
+    </>
+  } else {
+    submitText = <>
+      <span>Submit</span>
+    </>
+  }
+
   let renderData;
   if(data) {
     let renderViewBox;
@@ -98,7 +109,7 @@ const ResaleCalculator = () => {
               className="btn btn-primary submitButton no-focus"
               onClick={onClick}
               disabled={loading} >
-              Submit
+                {submitText}
             </button>
           </div>
         </div>

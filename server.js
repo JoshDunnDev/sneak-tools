@@ -16,8 +16,6 @@ const providerUrl = process.env.PROVIDER_URL;
 const etherscanApiKey = process.env.ETHERSCAN_API_KEY;
 
 app.get('/api/transaction/:hash', async (req, res) => {
-  console.log(req.params.hash);
-  console.log('PROVIDER::::', process.env.PROVIDER_URL);
   const hash = req.params.hash;
   const web3 = new Web3(providerUrl);
 
@@ -28,7 +26,6 @@ app.get('/api/transaction/:hash', async (req, res) => {
       `&apikey=${etherscanApiKey}`)
   ];
   const values = await Promise.all(promises);
-  console.log('PROMISES HAPPENED');
   const transaction = values[0];
   const receipt = values[1];
   const ethResponse = values[2].data;
