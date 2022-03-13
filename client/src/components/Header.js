@@ -24,7 +24,7 @@ const Header = () => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav
-            className="mx-auto mt-2 my-lg-0"
+            className="mx-auto my-lg-0"
             activeKey={location.pathname}
             style={{maxHeight: '100px'}}>
             <Nav.Link className="link" href="/">
