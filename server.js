@@ -16,17 +16,6 @@ const port = process.env.PORT || 8000;
 const providerUrl = process.env.PROVIDER_URL;
 const etherscanApiKey = process.env.ETHERSCAN_API_KEY;
 
-// handle production
-if(process.env.NODE_ENV === 'production') {
-  // static folder
-  app.use(express.static(__dirname + '/client/build'));
-
-  //handle single page app
-  app.get(/.*/, (req, res) => {
-    res.sendFile(__dirname + '/client/build/index.html');
-  });
-}
-
 app.get('/api/transaction/:hash', async (req, res) => {
   const hash = req.params.hash;
   const web3 = new Web3(providerUrl);
