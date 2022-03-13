@@ -18,7 +18,7 @@ const etherscanApiKey = process.env.ETHERSCAN_API_KEY;
 
 app.get('/api/transaction/:hash', async (req, res) => {
   console.log(req.params.hash);
-  console.log(process.env);
+  console.log(process.env.env);
   const hash = req.params.hash;
   const web3 = new Web3(providerUrl);
 
