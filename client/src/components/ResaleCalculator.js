@@ -5,6 +5,7 @@ import ProfitCalculation from './ProfitCalculation.js';
 import CollectionStats from './CollectionStats.js';
 import {transactionRequests} from '../utils/http.js';
 import {formatDetails, formatStats} from '../utils/helpers.js';
+import ReactGa from 'react-ga';
 
 const ResaleCalculator = () => {
   const [hash, setHash] = useState('');
@@ -17,6 +18,10 @@ const ResaleCalculator = () => {
 
   const onClick = async () => {
     if(hash) {
+      ReactGa.event({
+        category: 'Button',
+        action: 'Submit Button Clicked'
+      });
       setLoading(true);
       const requestData = await transactionRequests(hash);
       setLoading(false);

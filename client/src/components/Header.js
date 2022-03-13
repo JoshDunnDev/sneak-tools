@@ -39,7 +39,7 @@ const Header = () => {
             className="d-flex justify-content-md-end justify-content-start"
             style={{width: '150px'}}>
             <Nav.Link
-              className="ps-0 pe-2"
+              className="ps-0 pe-2 py-0"
               href="https://discord.gg/uAn4FccrBr"
               target="_blank">
               <FontAwesomeIcon
@@ -47,7 +47,7 @@ const Header = () => {
                 className="icon" />
             </Nav.Link>
             <Nav.Link
-              className="px-2"
+              className="px-2 py-0"
               href="https://twitter.com/SneakerrzNFT"
               target="_blank">
               <FontAwesomeIcon
@@ -55,7 +55,7 @@ const Header = () => {
                 className="icon" />
             </Nav.Link>
             <Nav.Link
-              className="px-2"
+              className="px-2 py-0"
               href="https://www.youtube.com/channel/UCxfA8Xe2aV0DGkr5kiW25rg"
               target="_blank">
               <FontAwesomeIcon

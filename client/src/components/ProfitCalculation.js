@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import {round} from '../utils/helpers.js';
+import ReactGa from 'react-ga';
 
 const ProfitCalculation = ({transactionDetails, ethPrice, sale, tax}) => {
   const mathRound = 1e12;
@@ -38,6 +39,20 @@ const ProfitCalculation = ({transactionDetails, ethPrice, sale, tax}) => {
     }
   }
 
+  const handleSaleInputClick = () => {
+    ReactGa.event({
+      category: 'Input',
+      action: 'Sale Input Clicked'
+    });
+  }
+
+  const handleTaxInputClick = () => {
+    ReactGa.event({
+      category: 'Input',
+      action: 'Tax Input Clicked'
+    });
+  }
+
   return (
     <div className="mt-4 ps-sm-2">
       <h4 className="text-left">Profit Calculation</h4>
@@ -52,6 +67,7 @@ const ProfitCalculation = ({transactionDetails, ethPrice, sale, tax}) => {
                 onChange={(e) => {
                   sale.setSalePrice(e.target.value);
                 }}
+                onClick={handleSaleInputClick}
                 placeholder="ETH Price"
                 className="form-control inputProfit mt-1"
                 style={{
@@ -98,6 +114,7 @@ const ProfitCalculation = ({transactionDetails, ethPrice, sale, tax}) => {
                   onChange={(e) => {
                     tax.setTaxPercent(e.target.value);
                   }}
+                  onClick={handleTaxInputClick}
                   placeholder="Percent"
                   className="form-control inputProfit mt-1"
                   style={{
