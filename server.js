@@ -25,7 +25,15 @@ app.get('/api/transaction/:hash', async (req, res) => {
     axios.get('https://api.etherscan.io/api?module=stats&action=ethprice' +
       `&apikey=${etherscanApiKey}`)
   ];
-  const values = await Promise.all(promises);
+
+  let values;
+  try {
+    values = await Promise.all(promises);
+  } catch(e) {
+    console.log(e);
+    return res.status(400).send(e.message);
+  }
+
   const transaction = values[0];
   const receipt = values[1];
   const ethResponse = values[2].data;

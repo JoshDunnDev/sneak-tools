@@ -14,21 +14,26 @@ const TransactionDetails = ({transactionDetails}) => {
     }
   }
 
+  let resizeTimer;
+  const handleResize = () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      if(window.innerWidth >= 576) {
+        setSmall(true);
+      } else {
+        setSmall(false);
+      }
+    }, 250);
+  };
+
 
   useEffect(() => {
-    let resizeTimer;
-    const handleResize = () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => {
-        if(window.innerWidth >= 576) {
-          setSmall(true);
-        } else {
-          setSmall(false);
-        }
-      }, 250);
-    }
-
+    handleResize();
     window.addEventListener('resize', handleResize)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
   });
 
   return (
