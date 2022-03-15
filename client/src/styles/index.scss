@@ -134,7 +134,8 @@ code {
   width: 38px;
 }
 
-.resetButton:hover {
+.resetButton:hover,
+.resetButton:focus {
   border-color: #fff;
 }
 
