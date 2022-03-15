@@ -30,10 +30,10 @@ const Header = () => {
             <Nav.Link className="link" href="/">
               Resale Calculator
             </Nav.Link>
-            {/* <div className="vl my-auto mx-2 d-none d-md-block"></div>
+            <div className="vl my-auto mx-2 d-none d-md-block"></div>
             <Nav.Link className="link" href="/notifier">
               Floor Price Notifier
-            </Nav.Link> */}
+            </Nav.Link>
           </Nav>
           <div
             className="d-flex justify-content-md-end justify-content-start"

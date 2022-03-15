@@ -1,8 +1,8 @@
+import FloorPriceNotifier from "../components/FloorPriceNotifier";
+
 const FloorPriceNotifierPage = () => {
   return (
-    <div>
-      Coming Soon!
-    </div>
+    <FloorPriceNotifier />
   );
 };
 

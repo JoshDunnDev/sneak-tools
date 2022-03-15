@@ -2,6 +2,8 @@ import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import Header from './components/Header.js';
 import Footer from './components/Footer.js';
 import ResaleCalculatorPage from './routes/ResaleCalculatorPage.js';
+import FloorPriceNotifierPage from './routes/FloorPriceNotifierPage.js';
+
 import ReactGa from 'react-ga';
 import {useEffect} from 'react';
 
@@ -20,6 +22,10 @@ const App = () => {
             path="/"
             exact
             element={<ResaleCalculatorPage />} />
+          <Route
+            path="/notifier"
+            exact
+            element={<FloorPriceNotifierPage />} />
         </Routes>
       </div>
       <Footer />
