@@ -20,13 +20,15 @@ const ResaleCalculator = () => {
   const [inputError, setInputError] = useState(false);
 
   const onClick = async () => {
+    setInputError('');
     if(input) {
       ReactGa.event({
         category: 'Button',
-        action: 'Resale Calculator Submit Button Clicked'
+        action: 'Resale Calculator Submit Clicked'
       });
       if(!input.match(/^[a-z0-9]+$/)) {
-        return setInputError(true);
+        return setInputError(
+          'Please enter a valid Etherscan Transaction Hash.');
       }
       setLoading(true);
       try {
@@ -34,7 +36,7 @@ const ResaleCalculator = () => {
         setRequestData(requestData);
         updateFormat(view, requestData);
       } catch(e) {
-        setInputError(true);
+        setInputError('Please enter a valid Etherscan Transaction Hash.');
       } finally {
         setLoading(false);
       }
@@ -71,8 +73,12 @@ const ResaleCalculator = () => {
   if(inputError) {
     renderError = <>
       <ErrorBox
-        error={'Please enter a valid Etherscan Transaction Hash.'}/>
+        error={inputError}
+        setInputError={setInputError} />
     </>
+    setTimeout(() => {
+      setInputError('');
+    }, 5000);
   }
 
   let renderData;
@@ -119,6 +125,7 @@ const ResaleCalculator = () => {
         title: 'Resale Calculator',
         placeholder: 'Etherscan Transaction Hash',
         buttonText: 'Submit',
+        resetButton: true,
         inputError, loading, input,
         onClick, reset, setInput, setInputError
       }} />

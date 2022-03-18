@@ -26,39 +26,60 @@ const SubmitBox = ({props}) => {
     </>
   }
 
+  let renderButtons
+  let inputClass = 'col-12 px-0 pe-sm-2 mt-3';
+  if(props.resetButton) {
+    inputClass += ' col-sm-9';
+    renderButtons = <>
+      <button
+        className="btn btn-primary no-focus me-2"
+        style={{width: 'calc(100% - 46px)', fontWeight: 'bold'}}
+        onClick={props.onClick}
+        disabled={props.loading} >
+          {submitText}
+      </button>
+      <button
+        className="btn btn-secondary resetButton no-focus px-2"
+        onClick={props.reset} >
+        <FontAwesomeIcon
+          icon={faRotateLeft}
+          size="1x" />
+      </button>
+    </>
+  } else {
+    inputClass += ' col-sm-10';
+    renderButtons = <>
+      <button
+        className="btn btn-primary no-focus me-2"
+        style={{width: '100%', fontWeight: 'bold'}}
+        onClick={props.onClick}
+        disabled={props.loading || props.isSubmitDisabled} >
+          {submitText}
+      </button>
+    </>
+  }
+
 
   return (
     <div className="mx-auto p-4 pt-0 fullBox">
       <h2 className="text-center pt-3 mb-0">{props.title}</h2>
       <div
         className="row mx-auto" style={{maxWidth: '600px'}}>
-        <div className="col-12 col-sm-9 px-0 pe-sm-2 mt-3">
+        <div className={inputClass}>
           <input
             type="text"
             placeholder={props.placeholder}
             className={inputClasses}
             value={props.input}
             onKeyDown={onKeyDown}
+            disabled={props.isSubmitDisabled}
             onChange={(e) => {
               props.setInput(e.target.value)
-              props.setInputError(false);
             }} />
         </div>
         <div
           className="col px-0 mt-3">
-          <button
-            className="btn btn-primary submitButton no-focus me-2"
-            onClick={props.onClick}
-            disabled={props.loading} >
-              {submitText}
-          </button>
-          <button
-            className="btn btn-secondary resetButton no-focus px-2"
-            onClick={props.reset} >
-            <FontAwesomeIcon
-              icon={faRotateLeft}
-              size="1x" />
-          </button>
+          {renderButtons}
         </div>
       </div>
     </div>
