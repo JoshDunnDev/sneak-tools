@@ -89,32 +89,41 @@ code {
 }
 
 // ----------------------
+.input,
+.input:focus,
+.input:disabled {
+  background-color: $secondary;
+}
 
+.select,
+.select:focus,
+.select:disabled {
+  background-color: $secondary;
+}
+
+.errorBox,
+.successBox,
 .fullBox {
   max-width: 900px;
-  background-color: $secondary;
   border-radius: 4px;
 }
 
-.inputHash {
-  background-color: $secondary;
-  width: 100%;
-}
-
-.inputHash:focus {
+.fullBox {
   background-color: $secondary;
 }
 
 .errorBox {
-  max-width: 900px;
-  background-color: $error;
-  border-radius: 4px;
+  background-color: $danger;
 }
 
-.errorHash {
+.successBox {
+  background-color: $success;
+}
+
+.errorInput {
   animation: shake 0.2s ease-in-out 0s 2;
   box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, .25) !important;
-  border: 1px solid $error !important;
+  border: 1px solid $danger !important;
 }
 
 @keyframes shake {
@@ -124,19 +133,23 @@ code {
   100% { margin-left: 0rem; }
 }
 
-.submitButton {
-  width: calc(100% - 46px);
-  font-weight: bold;
-}
-
 .resetButton {
-  border: 1px solid;
+  border: 1px solid #fff;
   width: 38px;
 }
 
 .resetButton:hover,
 .resetButton:focus {
   border-color: #fff;
+}
+
+.notification,
+.collectionTitle {
+  border-bottom: 1px solid #979797;
+}
+
+.notification:last-of-type {
+  border-bottom: none;
 }
 
 // ----------------------
@@ -151,24 +164,28 @@ code {
   border-radius: 0 0 4px 4px;
 }
 
-.inputPlaceholder {
+.inputPlaceholder,
+.floorPricePlaceholder {
   position: relative;
   display: inline-block;
   width: 100%;
 }
 
-.inputPlaceholder::after {
+.inputPlaceholder::after,
+.floorPricePlaceholder::after {
   position: absolute;
   right: 10px;
-  top: 11px;
   content: attr(data-placeholder);
   pointer-events: none;
   opacity: 0.6;
 }
 
-.inputProfit,
-.inputProfit:focus {
-  background-color: $secondary;
+.inputPlaceholder::after {
+  top: 11px;
+}
+
+.floorPricePlaceholder::after {
+  top: 7px;
 }
 
 .no-focus:focus {
@@ -183,3 +200,44 @@ code {
 .btn-light-blue:hover {
   color: #000;
 }
+
+// ----------------------
+
+.instructionBox {
+  border-radius: 4px;
+  background-color: $secondary;
+}
+
+.circleIcon {
+  border: solid 6px;
+  border-radius: 50%;
+}
+
+.collectionName {
+  font-size: 24px;
+}
+
+.collectionName:hover {
+  cursor: pointer;
+  color: #c3c3c3;
+}
+
+.priceInput {
+  height: 38px;
+  width: 100%;
+  padding-right: 45px;
+  @include media-breakpoint-up(lg) {
+    width: 150px;
+  }
+}
+
+
+
+.frequencySelect {
+  width: 100%;
+  @include media-breakpoint-up(lg) {
+    width: 180px;
+  }
+}
+
+

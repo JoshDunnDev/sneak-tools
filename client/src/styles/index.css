@@ -2501,7 +2501,7 @@ textarea.form-control-lg {
   line-height: 1.5;
   color: #fff;
   background-color: #1B1B1B;
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
   background-repeat: no-repeat;
   background-position: right 0.75rem center;
   background-size: 16px 12px;
@@ -3030,7 +3030,7 @@ textarea.form-control-lg {
 
 .was-validated .form-select:valid:not([multiple]):not([size]), .was-validated .form-select:valid:not([multiple])[size="1"], .form-select.is-valid:not([multiple]):not([size]), .form-select.is-valid:not([multiple])[size="1"] {
   padding-right: 4.125rem;
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e"), url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e"), url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
   background-position: right 0.75rem center, center right 2.25rem;
   background-size: 16px 12px, calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
 }
@@ -3129,7 +3129,7 @@ textarea.form-control-lg {
 
 .was-validated .form-select:invalid:not([multiple]):not([size]), .was-validated .form-select:invalid:not([multiple])[size="1"], .form-select.is-invalid:not([multiple]):not([size]), .form-select.is-invalid:not([multiple])[size="1"] {
   padding-right: 4.125rem;
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e"), url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e"), url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
   background-position: right 0.75rem center, center right 2.25rem;
   background-size: 16px 12px, calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
 }
@@ -12220,28 +12220,38 @@ fieldset:disabled .btn {
   height: 20px;
 }
 
+.input,
+.input:focus,
+.input:disabled {
+  background-color: #353535;
+}
+
+.select,
+.select:focus,
+.select:disabled {
+  background-color: #353535;
+}
+
+.errorBox,
+.successBox,
 .fullBox {
   max-width: 900px;
-  background-color: #353535;
   border-radius: 4px;
 }
 
-.inputHash {
-  background-color: #353535;
-  width: 100%;
-}
-
-.inputHash:focus {
+.fullBox {
   background-color: #353535;
 }
 
 .errorBox {
-  max-width: 900px;
   background-color: #dc3545;
-  border-radius: 4px;
 }
 
-.errorHash {
+.successBox {
+  background-color: #198754;
+}
+
+.errorInput {
   -webkit-animation: shake 0.2s ease-in-out 0s 2;
           animation: shake 0.2s ease-in-out 0s 2;
   -webkit-box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25) !important;
@@ -12279,19 +12289,23 @@ fieldset:disabled .btn {
   }
 }
 
-.submitButton {
-  width: calc(100% - 46px);
-  font-weight: bold;
-}
-
 .resetButton {
-  border: 1px solid;
+  border: 1px solid #fff;
   width: 38px;
 }
 
 .resetButton:hover,
 .resetButton:focus {
   border-color: #fff;
+}
+
+.notification,
+.collectionTitle {
+  border-bottom: 1px solid #979797;
+}
+
+.notification:last-of-type {
+  border-bottom: none;
 }
 
 .halfBox {
@@ -12304,24 +12318,28 @@ fieldset:disabled .btn {
   border-radius: 0 0 4px 4px;
 }
 
-.inputPlaceholder {
+.inputPlaceholder,
+.floorPricePlaceholder {
   position: relative;
   display: inline-block;
   width: 100%;
 }
 
-.inputPlaceholder::after {
+.inputPlaceholder::after,
+.floorPricePlaceholder::after {
   position: absolute;
   right: 10px;
-  top: 11px;
   content: attr(data-placeholder);
   pointer-events: none;
   opacity: 0.6;
 }
 
-.inputProfit,
-.inputProfit:focus {
-  background-color: #353535;
+.inputPlaceholder::after {
+  top: 11px;
+}
+
+.floorPricePlaceholder::after {
+  top: 7px;
 }
 
 .no-focus:focus {
@@ -12336,5 +12354,46 @@ fieldset:disabled .btn {
 
 .btn-light-blue:hover {
   color: #000;
+}
+
+.instructionBox {
+  border-radius: 4px;
+  background-color: #353535;
+}
+
+.circleIcon {
+  border: solid 6px;
+  border-radius: 50%;
+}
+
+.collectionName {
+  font-size: 24px;
+}
+
+.collectionName:hover {
+  cursor: pointer;
+  color: #c3c3c3;
+}
+
+.priceInput {
+  height: 38px;
+  width: 100%;
+  padding-right: 45px;
+}
+
+@media (min-width: 992px) {
+  .priceInput {
+    width: 150px;
+  }
+}
+
+.frequencySelect {
+  width: 100%;
+}
+
+@media (min-width: 992px) {
+  .frequencySelect {
+    width: 180px;
+  }
 }
 /*# sourceMappingURL=index.css.map */

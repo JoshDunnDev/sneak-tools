@@ -69,7 +69,7 @@ const ProfitCalculation = ({transactionDetails, ethPrice, sale, tax}) => {
                 }}
                 onClick={handleSaleInputClick}
                 placeholder="ETH Price"
-                className="form-control inputProfit mt-1"
+                className="form-control input mt-1"
                 style={{
                   height: '38px', width: '100%', paddingRight: '45px'
                 }} />
@@ -116,7 +116,7 @@ const ProfitCalculation = ({transactionDetails, ethPrice, sale, tax}) => {
                   }}
                   onClick={handleTaxInputClick}
                   placeholder="Percent"
-                  className="form-control inputProfit mt-1"
+                  className="form-control input mt-1"
                   style={{
                     height: '38px', width: '100%', paddingRight: '30px'
                   }} />

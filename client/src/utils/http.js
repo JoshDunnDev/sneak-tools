@@ -11,11 +11,25 @@ const transactionRequests = async (hash) => {
 
   const collectionSlug = contract.collection.slug.toLowerCase();
 
-  const contractStatsResponse = await axios.get('https://api.opensea.io/api/v1/' +
-    `collection/${collectionSlug}/stats`);
+  const contractStatsResponse = await axios.get('https://api.opensea.io/api/' +
+    `v1/collection/${collectionSlug}/stats`);
   const {stats: contractStats} = contractStatsResponse.data;
 
   return {transaction, receipt, contract, contractStats, ethPrice};
 };
 
-export {transactionRequests};
+const collectionRequest = async (slug) => {
+  let collectionData;
+  try {
+    collectionData = await axios.get('https://api.opensea.io/api/' +
+      `v1/collection/${slug}`);
+  } catch(e) {
+    throw e;
+  }
+
+  const {collection} = collectionData.data;
+
+  return {collection};
+};
+
+export {transactionRequests, collectionRequest};
