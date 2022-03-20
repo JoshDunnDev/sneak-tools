@@ -87,24 +87,19 @@ const CollectionBox = ({
       floorPrice,
       time: new Date().toLocaleTimeString()
     }
-    let desktopNotification;
-    if(!("Notification" in window)) {
-      desktopNotification = new Notification(notification.text, {
-        icon: logo,
-        timestamp: notification.time,
-        vibrate: [200, 100, 200]
-      });
-    }
+    const desktopNotification = new Notification(notification.text, {
+      icon: logo,
+      timestamp: notification.time,
+      vibrate: [200, 100, 200]
+    });
     setIsMuted((isMuted) => {
       if(!isMuted) {
         audio.play();
       }
       return isMuted;
     })
-    if(desktopNotification) {
-      desktopNotification.onclick = function () {
-        window.focus();
-      }
+    desktopNotification.onclick = function () {
+      window.focus();
     }
     updateNotifications(notification);
     if(isLimited) {
@@ -170,9 +165,9 @@ const CollectionBox = ({
       return;
     }
 
-    if(!("Notification" in window)) {
+    if(!('Notification' in window)) {
       setIsNotifying(true);
-      setMessage(`You are now watching ${collection.name}`);
+      setMessage('');
       setInputError('This browser does not support desktop notifications but ' +
         'notifications will be available on this page.');
       return updateCollection(collection);
