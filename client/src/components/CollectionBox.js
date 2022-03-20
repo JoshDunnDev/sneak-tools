@@ -9,7 +9,8 @@ import {round} from '../utils/helpers.js';
 
 const CollectionBox = ({
   collection, updateCollection, removeCollection, updateNotifications,
-  setInputError, setMessage, setLowError, setHighError, lowError, highError
+  setInputError, setMessage, setLowError, setHighError, lowError, highError,
+  setWarning
 }) => {
   const [lowPrice, setLowPrice] = useState('');
   const [highPrice, setHighPrice] = useState('');
@@ -174,8 +175,9 @@ const CollectionBox = ({
     if(!('Notification' in window)) {
       setIsNotifying(true);
       setMessage('');
-      setInputError('This browser does not support desktop notifications but ' +
-        'notifications will be available on this page.');
+      setInputError('')
+      setWarning('This browser does not support desktop notifications ' +
+        'but notifications will be available on this page.');
       return updateCollection(collection);
     }
 

@@ -12,6 +12,7 @@ const FloorPriceNotifier = () => {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [inputError, setInputError] = useState('');
+  const [warning, setWarning] = useState('');
   const [message, setMessage] = useState('');
   const [collectionData, setCollectionData] = useState([]);
   const [notifications, setNotifications] = useState([]);
@@ -160,6 +161,18 @@ const FloorPriceNotifier = () => {
     }, 5000);
   }
 
+  let renderWarning;
+  if(warning) {
+    renderError = <>
+      <MessageBox
+        message={warning}
+        setMessage={setWarning} />
+    </>
+    setTimeout(() => {
+      setWarning('');
+    }, 5000);
+  }
+
   const renderNote = <>
     <div
       className="mx-auto mt-3 p-3 instructionBox"
@@ -193,7 +206,8 @@ const FloorPriceNotifier = () => {
           highError={highError}
           lowError={lowError}
           setHighError={setHighError}
-          setLowError={setLowError} />
+          setLowError={setLowError}
+          setWarning={setWarning} />
       ))}
     </>
 
@@ -264,6 +278,7 @@ const FloorPriceNotifier = () => {
         onClick, setInput, setInputError, setMessage
       }} />
       {renderMessage}
+      {renderWarning}
       {renderError}
       {renderInstructions}
       {renderCollections}
