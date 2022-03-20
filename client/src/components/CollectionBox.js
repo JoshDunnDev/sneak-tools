@@ -5,23 +5,24 @@ import {faTimes} from '@fortawesome/fontawesome-free-solid';
 import {faVolumeMute, faVolumeUp} from '@fortawesome/free-solid-svg-icons';
 import logo from '../images/SAL_Logo.png';
 import audioFile from '../audio/definite-555.mp3';
+import {round} from '../utils/helpers.js';
 
 const CollectionBox = ({
   collection, updateCollection, removeCollection, updateNotifications,
-  setInputError, setMessage
+  setInputError, setMessage, setLowError, setHighError, lowError, highError
 }) => {
   const [lowPrice, setLowPrice] = useState('');
   const [highPrice, setHighPrice] = useState('');
   const [intervalId, setIntervalId] = useState(null);
   const [isNotifying, setIsNotifying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
-  const [frequency, setFrequency] = useState(5000);
+  const [frequency, setFrequency] = useState(60000);
   const [isLimited, setIsLimited] = useState(true);
 
   const frequencyOptions = [
-    {label: 'Only Once', value: 5000},
-    {label: 'Every 5 Seconds', value: 5000},
-    {label: 'Every 10 Seconds', value: 10000},
+    {label: 'Only Once', value: 60000},
+    {label: 'Every Minute', value: 60000},
+    {label: 'Every Hour', value: 3600000},
   ]
 
   useEffect(() => {
@@ -75,10 +76,15 @@ const CollectionBox = ({
     }
   }
 
-  const createNotification = (text, image) => {
+  const handleNameClick = (slug) => {
+    window.open(`https://opensea.io/collection/${slug}`, '_blank')
+  }
+
+  const createNotification = (text, image, floorPrice) => {
     const notification = {
       image,
       text,
+      floorPrice,
       time: new Date().toLocaleTimeString()
     }
     const desktopNotification = new Notification(notification.text, {
@@ -102,15 +108,17 @@ const CollectionBox = ({
   }
 
   const update = async () => {
-    await updateCollection(collection);
-    const image = collection.image_url;
-    if(lowPrice && collection.stats.floor_price < lowPrice) {
-      const text = `${collection.name} is below ${lowPrice} ETH`;
-      createNotification(text, image);
+    const updatedCollection = await updateCollection(collection);
+    const image = updatedCollection.image_url;
+    if(lowPrice && updatedCollection.stats.floor_price < lowPrice) {
+      const text = `${updatedCollection.name} is below
+        ${round(lowPrice, 1e4)} ETH`;
+      createNotification(text, image, updatedCollection.stats.floor_price);
     }
-    if(highPrice && collection.stats.floor_price > highPrice) {
-      const text = `${collection.name} is above ${highPrice} ETH`;
-      createNotification(text, image);
+    if(highPrice && updatedCollection.stats.floor_price > highPrice) {
+      const text = `${updatedCollection.name} is above
+        ${round(highPrice, 1e4)} ETH`;
+      createNotification(text, image, updatedCollection.stats.floor_price);
     }
   }
 
@@ -128,8 +136,32 @@ const CollectionBox = ({
       return;
     }
 
-    if(!lowPrice && !highPrice) {
+    if((!lowPrice && !highPrice)) {
       reset();
+      return;
+    }
+
+    if(isNaN(lowPrice)) {
+      reset();
+      setLowError('Low Price must be a number.');
+      return;
+    }
+
+    if(isNaN(highPrice)) {
+      reset();
+      setHighError('High Price must be a number.');
+      return;
+    }
+
+    if(lowPrice && lowPrice > collection.stats.floor_price) {
+      reset();
+      setLowError('Low Price cannot be above floor price.');
+      return;
+    }
+
+    if(highPrice && highPrice < collection.stats.floor_price) {
+      reset();
+      setHighError('High Price cannot be below floor price.');
       return;
     }
 
@@ -149,6 +181,20 @@ const CollectionBox = ({
       setInputError('Permission not granted. You must allow notifications ' +
         'for this website for the tool to work.');
     }
+  }
+
+  let lowClasses;
+  if(lowError) {
+    lowClasses = 'form-control input priceInput errorInput';
+  } else {
+    lowClasses = 'form-control input priceInput';
+  }
+
+  let highClasses;
+  if(highError) {
+    highClasses = 'form-control input priceInput errorInput';
+  } else {
+    highClasses = 'form-control input priceInput';
   }
 
   let renderSoundButton;
@@ -204,10 +250,13 @@ const CollectionBox = ({
             <img
               src={collection.image_url}
               alt=""
+              className="d-none d-sm-block"
               style={{width: '35px'}} />
             <div
-              className="col d-flex align-items-center ms-3"
-              style={{fontSize: '24px'}}>
+              className="d-flex align-items-center ms-0 ms-sm-3 collectionName"
+              onClick={() => {
+                handleNameClick(collection.slug);
+              }}>
               {collection.name}
             </div>
           </div>
@@ -224,20 +273,21 @@ const CollectionBox = ({
               }} >
               <FontAwesomeIcon
                 icon={faTimes}
-                size="1x" />
+                size="1x"
+                style={{width: '12px'}} />
             </button>
           </div>
         </div>
         <div className="row justify-content-between mx-3">
-          <div className="col mt-3">
+          <div className="col-12 col-md-2 mt-3 pe-md-1 pe-lg-2">
             <div className="mb-1">Floor Price</div>
             <div
               className="d-flex align-items-center"
               style={{height: '38px', fontSize: '18px'}}>
-              {collection.stats.floor_price} ETH
+              {round(collection.stats.floor_price, 1e4)} ETH
             </div>
           </div>
-          <div className="col mt-3">
+          <div className="col-12 col-sm-6 col-md mt-3 pe-sm-2 px-md-1 px-lg-2">
             <div className="mb-1">Low Price (ETH)</div>
             <div className="floorPricePlaceholder" data-placeholder="ETH">
               <input
@@ -250,13 +300,10 @@ const CollectionBox = ({
                 }}
                 onClick={handleLowInputClick}
                 placeholder="Price"
-                className="form-control input"
-                style={{
-                  height: '38px', width: '150px'
-                }} />
+                className={lowClasses} />
             </div>
           </div>
-          <div className="col mt-3">
+          <div className="col-12 col-sm-6 col-md mt-3 ps-sm-2 px-md-1 px-lg-2">
             <div className="mb-1">High Price (ETH)</div>
             <div className="floorPricePlaceholder" data-placeholder="ETH">
               <input
@@ -269,19 +316,15 @@ const CollectionBox = ({
                 }}
                 onClick={handleHighInputClick}
                 placeholder="Price"
-                className="form-control input"
-                style={{
-                  height: '38px', width: '150px'
-                }} />
+                className={highClasses} />
             </div>
           </div>
-          <div className="col mt-3">
+          <div className="col mt-3 px-md-1 px-lg-2">
             <div className="mb-1">Frequency</div>
             <select
               disabled={isNotifying}
               className="form-select form-select-secondary
-                form-select-disabled-dark select"
-              style={{width: '180px'}}
+                form-select-disabled-dark select frequencySelect"
               onChange={handleOnChange} >
               {frequencyOptions.map((option, index) => (
                 <option
@@ -292,11 +335,12 @@ const CollectionBox = ({
               ))}
             </select>
           </div>
-          <div className="col mt-3 d-flex align-items-end">
+          <div className="col-12 col-md mt-3 d-flex
+            align-items-end order-last order-md-0 px-md-1 px-lg-2">
               {renderNotifyButton}
           </div>
           <div
-            className="col-1 mt-3 d-flex align-items-end"
+            className="col-1 mt-3 d-flex align-items-end ps-1 ps-lg-2"
             style={{width: 'initial'}}>
               {renderSoundButton}
           </div>

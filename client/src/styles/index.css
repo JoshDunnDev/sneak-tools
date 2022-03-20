@@ -12355,4 +12355,45 @@ fieldset:disabled .btn {
 .btn-light-blue:hover {
   color: #000;
 }
+
+.instructionBox {
+  border-radius: 4px;
+  background-color: #353535;
+}
+
+.circleIcon {
+  border: solid 6px;
+  border-radius: 50%;
+}
+
+.collectionName {
+  font-size: 24px;
+}
+
+.collectionName:hover {
+  cursor: pointer;
+  color: #c3c3c3;
+}
+
+.priceInput {
+  height: 38px;
+  width: 100%;
+  padding-right: 45px;
+}
+
+@media (min-width: 992px) {
+  .priceInput {
+    width: 150px;
+  }
+}
+
+.frequencySelect {
+  width: 100%;
+}
+
+@media (min-width: 992px) {
+  .frequencySelect {
+    width: 180px;
+  }
+}
 /*# sourceMappingURL=index.css.map */

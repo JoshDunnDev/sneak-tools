@@ -6,6 +6,7 @@ import CollectionBox from './CollectionBox.js';
 import NotificationBox from './NotificationBox.js';
 import ReactGa from 'react-ga';
 import {collectionRequest} from '../utils/http.js';
+import InstructionBoxes from './InstructionBoxes.js';
 
 const FloorPriceNotifier = () => {
   const [input, setInput] = useState('');
@@ -15,6 +16,8 @@ const FloorPriceNotifier = () => {
   const [collectionData, setCollectionData] = useState([]);
   const [notifications, setNotifications] = useState([]);
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
+  const [lowError, setLowError] = useState('');
+  const [highError, setHighError] = useState('');
 
   const onClick = async () => {
     if(input) {
@@ -69,7 +72,18 @@ const FloorPriceNotifier = () => {
   }
 
   const updateCollection = async (collection) => {
-    const index = collectionData.indexOf(collection.id);
+    let returnedCollection;
+    const {collection: updatedCollection} =
+      await collectionRequest(collection.slug);
+    setCollectionData((data) => {
+      const index = data.findIndex(c => c.id === collection.id);
+      updatedCollection.id = collection.id;
+      const updatedCollectionData = [...data];
+      updatedCollectionData.splice(index, 1, updatedCollection);
+      returnedCollection = updatedCollection;
+      return updatedCollectionData;
+    })
+    return returnedCollection;
   }
 
   const removeCollection = (id) => {
@@ -81,8 +95,14 @@ const FloorPriceNotifier = () => {
 
   const updateNotifications = (notification) => {
     setNotifications((arr) => {
-      notification.id = arr.length;
-      return [notification, ...arr]
+      const newNotification = {...notification};
+      if(arr.length > 0) {
+        const lastestNotification = arr[0];
+        newNotification.id = lastestNotification.id + 1;
+      } else {
+        newNotification.id = 1;
+      }
+      return [newNotification, ...arr]
     });
   }
 
@@ -106,6 +126,28 @@ const FloorPriceNotifier = () => {
     }, 5000);
   }
 
+  if(lowError) {
+    renderError = <>
+      <ErrorBox
+        error={lowError}
+        setInputError={setLowError} />
+    </>
+    setTimeout(() => {
+      setLowError('');
+    }, 5000);
+  }
+
+  if(highError) {
+    renderError = <>
+      <ErrorBox
+        error={highError}
+        setInputError={setHighError} />
+    </>
+    setTimeout(() => {
+      setHighError('');
+    }, 5000);
+  }
+
   let renderMessage;
   if(message) {
     renderError = <>
@@ -117,6 +159,15 @@ const FloorPriceNotifier = () => {
       setMessage('');
     }, 5000);
   }
+
+  const renderNote = <>
+    <div
+      className="mx-auto mt-3 p-3 instructionBox"
+      style={{maxWidth: '900px', fontWeight: 'bold'}}>
+      NOTE: You must keep this window open in order to receive
+      notifications.
+    </div>
+  </>
 
   let renderCollections;
   let inputPlaceholder;
@@ -138,7 +189,11 @@ const FloorPriceNotifier = () => {
           updateCollection={updateCollection}
           updateNotifications={updateNotifications}
           setInputError={setInputError}
-          setMessage={setMessage} />
+          setMessage={setMessage}
+          highError={highError}
+          lowError={lowError}
+          setHighError={setHighError}
+          setLowError={setLowError} />
       ))}
     </>
 
@@ -164,11 +219,11 @@ const FloorPriceNotifier = () => {
           className="row mx-auto"
           style={{maxWidth: '900px'}}>
           <h4
-            className="col text-start">
+            className="col-8 text-start px-0">
               Notifications
           </h4>
           <div
-            className="col mb-2 d-flex align-items-end justify-content-end"
+            className="col mb-2 pe-0 d-flex align-items-end justify-content-end"
             style={{textDecoration: 'underline', cursor: 'pointer'}}
             onClick={handleClearAll}>
             Clear All
@@ -190,7 +245,8 @@ const FloorPriceNotifier = () => {
           style={{maxWidth: '900px'}}>
             Instructions
         </h4>
-        <div></div>
+        <InstructionBoxes />
+        {renderNote}
       </div>
     </>
   }

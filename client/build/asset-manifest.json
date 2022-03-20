@@ -1,17 +1,19 @@
 {
   "files": {
-    "main.css": "/static/css/main.94716c6d.css",
-    "main.js": "/static/js/main.c4aa5872.js",
+    "main.css": "/static/css/main.42b7aaee.css",
+    "main.js": "/static/js/main.1764a8cc.js",
     "static/js/787.5af0145c.chunk.js": "/static/js/787.5af0145c.chunk.js",
+    "static/media/NotificationAlert.png": "/static/media/NotificationAlert.ad9141232da990fffca4.png",
     "static/media/definite-555.mp3": "/static/media/definite-555.a7c4507e43033cb3fec1.mp3",
     "static/media/SAL_Logo.png": "/static/media/SAL_Logo.095dce042cfeebe08db0.png",
+    "static/media/InputBoxes.png": "/static/media/InputBoxes.da4909b86543a5c407ac.png",
     "index.html": "/index.html",
-    "main.94716c6d.css.map": "/static/css/main.94716c6d.css.map",
-    "main.c4aa5872.js.map": "/static/js/main.c4aa5872.js.map",
+    "main.42b7aaee.css.map": "/static/css/main.42b7aaee.css.map",
+    "main.1764a8cc.js.map": "/static/js/main.1764a8cc.js.map",
     "787.5af0145c.chunk.js.map": "/static/js/787.5af0145c.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.94716c6d.css",
-    "static/js/main.c4aa5872.js"
+    "static/css/main.42b7aaee.css",
+    "static/js/main.1764a8cc.js"
   ]
 }

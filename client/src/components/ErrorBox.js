@@ -18,7 +18,7 @@ const ErrorBox = ({error, setInputError}) => {
           <div className="col d-flex align-items-center mt-3">
             {error}
           </div>
-          <div className="col-1 mt-3">
+          <div className="col-2 col-sm-1 d-flex align-items-center mt-3">
             <button
               className="btn btn-danger no-focus px-2"
               style={{width: '38px'}}
