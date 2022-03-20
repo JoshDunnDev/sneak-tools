@@ -12251,6 +12251,10 @@ fieldset:disabled .btn {
   background-color: #198754;
 }
 
+.warningBox {
+  background-color: #ffc107;
+}
+
 .errorInput {
   -webkit-animation: shake 0.2s ease-in-out 0s 2;
           animation: shake 0.2s ease-in-out 0s 2;

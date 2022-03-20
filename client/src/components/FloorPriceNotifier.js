@@ -2,6 +2,7 @@ import {useState} from 'react';
 import SubmitBox from './SubmitBox.js';
 import ErrorBox from './ErrorBox.js';
 import MessageBox from './MessageBox.js';
+import WarningBox from './WarningBox.js';
 import CollectionBox from './CollectionBox.js';
 import NotificationBox from './NotificationBox.js';
 import ReactGa from 'react-ga';
@@ -163,9 +164,9 @@ const FloorPriceNotifier = () => {
 
   let renderWarning;
   if(warning) {
-    renderError = <>
-      <MessageBox
-        message={warning}
+    renderWarning = <>
+      <WarningBox
+        warning={warning}
         setMessage={setWarning} />
     </>
     setTimeout(() => {

@@ -6,7 +6,7 @@ const MessageBox = ({message, setMessage}) => {
   const handleDismissClick = () => {
     ReactGa.event({
       category: 'Button',
-      action: 'Dismiss Error Clicked'
+      action: 'Dismiss Message Clicked'
     });
     setMessage('');
   }

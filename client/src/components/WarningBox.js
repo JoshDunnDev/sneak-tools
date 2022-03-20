@@ -6,7 +6,7 @@ const MessageBox = ({warning, setWarning}) => {
   const handleDismissClick = () => {
     ReactGa.event({
       category: 'Button',
-      action: 'Dismiss Error Clicked'
+      action: 'Dismiss Warning Clicked'
     });
     setWarning('');
   }
@@ -20,7 +20,7 @@ const MessageBox = ({warning, setWarning}) => {
           </div>
           <div className="col-2 col-sm-1 d-flex align-items-center mt-3">
             <button
-              className="btn btn-success no-focus px-2"
+              className="btn btn-warning no-focus px-2"
               style={{width: '38px'}}
               onClick={handleDismissClick} >
               <FontAwesomeIcon
