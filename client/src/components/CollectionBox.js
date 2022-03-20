@@ -171,8 +171,9 @@ const CollectionBox = ({
     }
 
     if(!("Notification" in window)) {
-      setMessage('');
-      setInputError('This browser does not support desktop notifications but' +
+      setIsNotifying(true);
+      setMessage(`You are now watching ${collection.name}`);
+      setInputError('This browser does not support desktop notifications but ' +
         'notifications will be available on this page.');
       return updateCollection(collection);
     }
