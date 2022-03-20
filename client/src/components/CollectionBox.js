@@ -87,19 +87,25 @@ const CollectionBox = ({
       floorPrice,
       time: new Date().toLocaleTimeString()
     }
-    const desktopNotification = new Notification(notification.text, {
-      icon: logo,
-      timestamp: notification.time,
-      vibrate: [200, 100, 200]
-    });
+    let desktopNotification;
+    if('Notification' in window) {
+      desktopNotification = new Notification(notification.text, {
+        icon: logo,
+        timestamp: notification.time,
+        vibrate: [200, 100, 200]
+      });
+    }
+
     setIsMuted((isMuted) => {
       if(!isMuted) {
         audio.play();
       }
       return isMuted;
     })
-    desktopNotification.onclick = function () {
-      window.focus();
+    if(desktopNotification) {
+      desktopNotification.onclick = function () {
+        window.focus();
+      }
     }
     updateNotifications(notification);
     if(isLimited) {
