@@ -15,7 +15,7 @@ const MessageBox = ({warning, setWarning}) => {
     <div className="mt-4">
       <div className="mx-auto pb-3 warningBox">
         <div className="row justify-content-between mx-3">
-          <div className="col d-flex align-items-center mt-3 text-warning">
+          <div className="col d-flex align-items-center mt-3 text-dark">
             {warning}
           </div>
           <div className="col-2 col-sm-1 d-flex align-items-center mt-3">
