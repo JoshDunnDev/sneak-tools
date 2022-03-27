@@ -12190,6 +12190,10 @@ fieldset:disabled .btn {
   }
 }
 
+.loader {
+  background-color: #1B1B1B !important;
+}
+
 .btn-primary {
   color: #fff !important;
 }
@@ -12218,6 +12222,27 @@ fieldset:disabled .btn {
 .vl {
   border-left: 1px solid #fff;
   height: 20px;
+}
+
+.dropDown a,
+.dropDown a:hover,
+.dropDown a:active .dropDown a:focus {
+  color: #fff !important;
+}
+
+.dropDown .dropdown-toggle {
+  padding-left: 0;
+}
+
+@media (min-width: 992px) {
+  .dropDown .dropdown-toggle {
+    padding-left: 16px;
+  }
+}
+
+.dropDown div {
+  margin-top: 7px !important;
+  background-color: #353535;
 }
 
 .input,

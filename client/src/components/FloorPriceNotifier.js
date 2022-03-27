@@ -6,7 +6,7 @@ import WarningBox from './WarningBox.js';
 import CollectionBox from './CollectionBox.js';
 import NotificationBox from './NotificationBox.js';
 import ReactGa from 'react-ga';
-import {collectionRequest} from '../utils/http.js';
+import {getCollection, addSlugs} from '../utils/http.js';
 import InstructionBoxes from './InstructionBoxes.js';
 
 const FloorPriceNotifier = () => {
@@ -43,8 +43,8 @@ const FloorPriceNotifier = () => {
           setMessage('');
           return setInputError('You are already watching this collection.');
         }
-        const {collection} = await collectionRequest(slug);
-        addCollection(collection)
+        const {collection} = await getCollection(slug);
+        await addCollection(collection)
       } catch(e) {
         setMessage('');
         setInputError('An error occuring when adding this collection. Please ' +
@@ -64,19 +64,24 @@ const FloorPriceNotifier = () => {
     setNotifications([]);
   }
 
-  const addCollection = (collection) => {
+  const addCollection = async (collection) => {
     const id = collectionData.length;
     const newCollection = {id, ...collection}
     if(collectionData.length === 2) {
       setIsSubmitDisabled(true);
     }
-    setCollectionData([newCollection, ...collectionData]);
+    const collections = [newCollection, ...collectionData]
+    setCollectionData(collections);
+    console.log(collections);
+    const slugs = collections.map(collection => collection.slug);
+    console.log(slugs);
+    await addSlugs({slugs})
   }
 
   const updateCollection = async (collection) => {
     let returnedCollection;
     const {collection: updatedCollection} =
-      await collectionRequest(collection.slug);
+      await getCollection(collection.slug);
     setCollectionData((data) => {
       const index = data.findIndex(c => c.id === collection.id);
       updatedCollection.id = collection.id;

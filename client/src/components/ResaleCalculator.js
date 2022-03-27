@@ -5,7 +5,7 @@ import ProfitCalculation from './ProfitCalculation.js';
 import CollectionStats from './CollectionStats.js';
 import SubmitBox from './SubmitBox.js';
 import ErrorBox from './ErrorBox.js';
-import {transactionRequests} from '../utils/http.js';
+import {getTransaction} from '../utils/http.js';
 import {formatDetails, formatStats} from '../utils/helpers.js';
 import ReactGa from 'react-ga';
 
@@ -32,7 +32,7 @@ const ResaleCalculator = () => {
       }
       setLoading(true);
       try {
-        const requestData = await transactionRequests(input);
+        const requestData = await getTransaction(input);
         setRequestData(requestData);
         updateFormat(view, requestData);
       } catch(e) {

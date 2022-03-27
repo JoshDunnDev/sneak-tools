@@ -58,6 +58,10 @@ code {
   }
 }
 
+.loader {
+  background-color: $body-bg !important;
+}
+
 .btn-primary {
   color: $body-color !important;
 }
@@ -86,6 +90,25 @@ code {
 .vl {
   border-left: 1px solid $body-color;
   height: 20px;
+}
+
+.dropDown a,
+.dropDown a:hover,
+.dropDown a:active
+.dropDown a:focus {
+  color: #fff !important;
+}
+
+.dropDown .dropdown-toggle {
+  padding-left: 0;
+  @include media-breakpoint-up(lg) {
+    padding-left: 16px;
+  }
+}
+
+.dropDown div {
+  margin-top: 7px !important;
+  background-color: $secondary;
 }
 
 // ----------------------

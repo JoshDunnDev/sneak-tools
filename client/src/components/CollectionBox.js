@@ -78,7 +78,7 @@ const CollectionBox = ({
   }
 
   const handleNameClick = (slug) => {
-    window.open(`https://opensea.io/collection/${slug}`, '_blank')
+    window.open(`https://opensea.io/collection/${slug}`, '_blank');
   }
 
   const createNotification = (text, image, floorPrice) => {
@@ -148,29 +148,29 @@ const CollectionBox = ({
       return;
     }
 
-    if(isNaN(lowPrice)) {
-      reset();
-      setLowError('Low Price must be a number.');
-      return;
-    }
+    // if(isNaN(lowPrice)) {
+    //   reset();
+    //   setLowError('Low Price must be a number.');
+    //   return;
+    // }
 
-    if(isNaN(highPrice)) {
-      reset();
-      setHighError('High Price must be a number.');
-      return;
-    }
+    // if(isNaN(highPrice)) {
+    //   reset();
+    //   setHighError('High Price must be a number.');
+    //   return;
+    // }
 
-    if(lowPrice && lowPrice > collection.stats.floor_price) {
-      reset();
-      setLowError('Low Price cannot be above floor price.');
-      return;
-    }
+    // if(lowPrice && lowPrice > collection.stats.floor_price) {
+    //   reset();
+    //   setLowError('Low Price cannot be above floor price.');
+    //   return;
+    // }
 
-    if(highPrice && highPrice < collection.stats.floor_price) {
-      reset();
-      setHighError('High Price cannot be below floor price.');
-      return;
-    }
+    // if(highPrice && highPrice < collection.stats.floor_price) {
+    //   reset();
+    //   setHighError('High Price cannot be below floor price.');
+    //   return;
+    // }
 
     if(!('Notification' in window)) {
       setIsNotifying(true);

@@ -1,16 +1,77 @@
 import {
   Container,
   Navbar,
-  Nav
+  Nav,
+  NavDropdown
 } from 'react-bootstrap';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {
-  faDiscord, faTwitter, faYoutube
-} from '@fortawesome/fontawesome-free-brands';
-import {useLocation} from 'react-router-dom';
+import {useLocation, NavLink} from 'react-router-dom';
+import {formatWalletAddress} from '../utils/helpers';
+import {ethers} from 'ethers';
+import ReactGa from 'react-ga';
+import {useContext} from 'react';
+import {getNonce, verifyWallet} from '../utils/http.js';
+import {addCookie, deleteCookie} from '../utils/helpers.js';
+import UserContext from './UserContext.js';
 
 const Header = () => {
   const location = useLocation();
+  const {user, setUser} = useContext(UserContext);
+
+  const login = async () => {
+    ReactGa.event({
+      category: 'Button',
+      action: 'Login Clicked'
+    });
+    if(!window.ethereum) {
+      window.open('https://metamask.io/', '_blank');
+      return;
+    }
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    await provider.send('eth_requestAccounts', []);
+    const signer = provider.getSigner();
+    const walletAddress = await signer.getAddress();
+    const nonceMessage = await getNonce({walletAddress});
+    const signature = await signer.signMessage(nonceMessage);
+    const {user, token} = await verifyWallet({
+      walletAddress, nonceMessage, signature
+    });
+    addCookie('token', token);
+    setUser(user);
+  }
+
+  const logout = () => {
+    console.log('logout clicked');
+    ReactGa.event({
+      category: 'Button',
+      action: 'Logout Clicked'
+    });
+    deleteCookie('token');
+    localStorage.clear();
+    setUser(null);
+  }
+
+  let renderUser;
+  if(user) {
+    renderUser = <>
+      <NavDropdown
+        title={formatWalletAddress(user.walletAddress)}
+        menuVariant="dark"
+        className="dropDown">
+        <NavDropdown.Item onClick={logout}>
+          Logout
+        </NavDropdown.Item>
+      </NavDropdown>
+    </>
+  } else {
+    renderUser = <>
+      <button
+        className="btn btn-primary no-focus"
+        onClick={login}
+        style={{fontWeight: 'bold'}}>
+          <div>Connect Wallet</div>
+      </button>
+    </>
+  }
 
   return (
     <Navbar className="nav" expand="md" variant="dark">
@@ -27,41 +88,22 @@ const Header = () => {
             className="mx-auto my-lg-0"
             activeKey={location.pathname}
             style={{maxHeight: '100px'}}>
-            <Nav.Link className="link" href="/">
+            <NavLink
+              className="nav-link link"
+              to="/">
               Resale Calculator
-            </Nav.Link>
+            </NavLink>
             <div className="vl my-auto mx-2 d-none d-md-block"></div>
-            <Nav.Link className="link" href="/notifier">
+            <NavLink
+              className="nav-link link"
+              to="/notifier">
               Floor Price Notifier
-            </Nav.Link>
+            </NavLink>
           </Nav>
           <div
             className="d-flex justify-content-md-end justify-content-start"
             style={{width: '150px'}}>
-            <Nav.Link
-              className="ps-0 pe-2 py-0"
-              href="https://discord.gg/uAn4FccrBr"
-              target="_blank">
-              <FontAwesomeIcon
-                icon={faDiscord}
-                className="icon" />
-            </Nav.Link>
-            <Nav.Link
-              className="px-2 py-0"
-              href="https://twitter.com/SneakerrzNFT"
-              target="_blank">
-              <FontAwesomeIcon
-                icon={faTwitter}
-                className="icon" />
-            </Nav.Link>
-            <Nav.Link
-              className="px-2 py-0"
-              href="https://www.youtube.com/channel/UCxfA8Xe2aV0DGkr5kiW25rg"
-              target="_blank">
-              <FontAwesomeIcon
-                icon={faYoutube}
-                className="icon" />
-            </Nav.Link>
+            {renderUser}
           </div>
         </Navbar.Collapse>
       </Container>

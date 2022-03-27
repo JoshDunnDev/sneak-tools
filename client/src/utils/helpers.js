@@ -105,4 +105,38 @@ const getCount = (requestData) => {
   return count;
 };
 
-export {formatDetails, formatStats, abbrNum, round};
+const formatWalletAddress = (address) => {
+  console.log(address);
+  console.log(address.length);
+  console.log(address.substring(0, 5));
+  const start = address.substring(0, 5);
+  const end = address.substring((address.length - 4), address.length);
+  return `${start}...${end}`;
+}
+
+const addCookie = (name, value) => {
+  document.cookie = name + '=' + value;
+}
+
+const getCookie = (name) => {
+  const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+  if(match) {
+    return match[2];
+  }
+  return false;
+}
+
+const deleteCookie = (name) => {
+  document.cookie = name + '=; Max-Age=0'
+}
+
+export {
+  formatDetails,
+  formatWalletAddress,
+  formatStats,
+  abbrNum,
+  round,
+  addCookie,
+  getCookie,
+  deleteCookie
+};
