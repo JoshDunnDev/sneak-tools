@@ -90,7 +90,6 @@ const ResaleCalculator = () => {
           transactionDetails={data.transactionDetails}
           views={{view, updateView}} />
       </>
-
     }
 
     renderData = <>

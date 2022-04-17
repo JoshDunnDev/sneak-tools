@@ -91,17 +91,28 @@ function abbrNum(number, decPlaces) {
 
 const getCount = (requestData) => {
   let count;
+  // mint
   if((requestData.receipt.to).toLowerCase() === (
     requestData.receipt.logs[0].address).toLowerCase()) {
     count = requestData.receipt.logs.filter(log => {
       return (log.address).toLowerCase() === (
         requestData.receipt.to).toLowerCase();
     }).length;
-    if(count > 1) {
-      return count;
-    }
+    return count;
   }
-  count = 1;
+
+  // multi-transaction
+  const address = requestData.receipt.from.split('0x').pop();
+  requestData.receipt.logs.forEach((log) => {
+    const index = log.topics.findIndex(element => element.includes(address))
+    if(index >= 0) {
+      if(!count) {
+        count = 0;
+      }
+      count += 1;
+    }
+  });
+
   return count;
 };
 
